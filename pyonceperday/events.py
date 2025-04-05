@@ -68,15 +68,33 @@ class Occurance:
     self.end = end
   
   def __repr__(self):
-    return f"Occurance at {self.start.month}, {self.start.day}. {self.start.year}"
+    return f"Occurance at {self.start.month} {self.start.day}, {self.start.year} {self.start.hour}:{self.start.minute} to {self.end.hour}:{self.end.minute}"
 
 def is_occurance_overlapping(test_occurance, occurance):
   if test_occurance.start.year == occurance.start.year and test_occurance.start.month == occurance.start.month and test_occurance.start.day == occurance.start.day:
     # let's see if we are overlapping
-    start_delta = test_occurance.start - occurance.start
-    if start_delta.seconds >= 0:
-      return True 
-    end_delta = test.occurance.end - occurance.end
-    if end_delta.seconds <= 0:
+    # does my test start time begin after the end of the occurance? 
+    if test_occurance.start > occurance.end:
+      return False
+    beginning_start_delta = test_occurance.start - occurance.start
+    real_time = beginning_start_delta.total_seconds() / 60
+    print(f" start is {real_time}")
+    # test event starts after occurance begins
+    if real_time > 0:
       return True
+    # starting right when another event start
+    elif real_time == 0:
+      return True
+    # start time is before the start of the occurance
+    elif real_time < 0:
+      pass
+    
+    # see if the test_occurance end time is the start of the occurance
+    if test_occurance.end == occurance.start:
+      return False
+    beginning_end_delta = test_occurance.end - occurance.end
+    real_time = beginning_end_delta.total_seconds() / 60
+
+    print(f"end is {real_time}")
+    return True
   return False

@@ -40,10 +40,10 @@ def test_creates_repeated_events():
 
 
 def test_occurance_overlap():
-  oc1 = Occurance("test", datetime(2025, 4, 3, 13, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 30, tzinfo=pytz.UTC))
-  oc2 = Occurance("test2", datetime(2025, 4, 3, 13, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 15, 30, tzinfo=pytz.UTC))
+  oc1 = Occurance("test", datetime(2025, 4, 3, 13, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 15, tzinfo=pytz.UTC))
+  oc2 = Occurance("test2", datetime(2025, 4, 3, 13, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 30, tzinfo=pytz.UTC))
   results = is_occurance_overlapping(oc1, oc2)
-  assert results is True
+  assert results is False
 
   oc1 = Occurance("test", datetime(2025, 4, 3, 13, 20, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 30, tzinfo=pytz.UTC))
   oc2 = Occurance("test2", datetime(2025, 4, 3, 13, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 30, tzinfo=pytz.UTC))
@@ -60,8 +60,18 @@ def test_occurance_overlap():
   results = is_occurance_overlapping(oc1, oc2)
   assert results is True
 
-  oc1 = Occurance("test", datetime(2025, 4, 3, 13, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 13, 30, tzinfo=pytz.UTC))
-  oc2 = Occurance("test2", datetime(2025, 4, 3, 13, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 14, 30, tzinfo=pytz.UTC))
+  oc1 = Occurance("test", datetime(2025, 4, 3, 9, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 9, 30, tzinfo=pytz.UTC))
+  oc2 = Occurance("test2", datetime(2025, 4, 3, 9, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 10, 30, tzinfo=pytz.UTC))
+  results = is_occurance_overlapping(oc1, oc2)
+  assert results is True
+
+  oc1 = Occurance("test", datetime(2025, 4, 3, 10, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 10, 30, tzinfo=pytz.UTC))
+  oc2 = Occurance("test2", datetime(2025, 4, 3, 9, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 9, 30, tzinfo=pytz.UTC))
+  results = is_occurance_overlapping(oc1, oc2)
+  assert results is False
+
+  oc1 = Occurance("test", datetime(2025, 4, 3, 8, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 9, 30, tzinfo=pytz.UTC))
+  oc2 = Occurance("test2", datetime(2025, 4, 3, 9, 15, tzinfo=pytz.UTC), datetime(2025, 4, 3, 9, 30, tzinfo=pytz.UTC))
   results = is_occurance_overlapping(oc1, oc2)
   assert results is True
 
