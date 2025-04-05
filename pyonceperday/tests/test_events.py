@@ -75,6 +75,11 @@ def test_occurance_overlap():
   results = is_occurance_overlapping(oc1, oc2)
   assert results is True
 
+  oc1 = Occurance("test", datetime(2025, 4, 3, 10, 0, tzinfo=pytz.UTC), datetime(2025, 4, 3, 10, 15, tzinfo=pytz.UTC))
+  oc2 = Occurance("test2", datetime(2025, 4, 3, 11, 00, tzinfo=pytz.UTC), datetime(2025, 4, 3, 12, 30, tzinfo=pytz.UTC))
+  results = is_occurance_overlapping(oc1, oc2)
+  assert results is False
+
 
 def test_max_duration_constant():
   with pytest.raises(OverMaxDurantion):

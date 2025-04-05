@@ -78,7 +78,6 @@ def is_occurance_overlapping(test_occurance, occurance):
       return False
     beginning_start_delta = test_occurance.start - occurance.start
     real_time = beginning_start_delta.total_seconds() / 60
-    print(f" start is {real_time}")
     # test event starts after occurance begins
     if real_time > 0:
       return True
@@ -92,9 +91,10 @@ def is_occurance_overlapping(test_occurance, occurance):
     # see if the test_occurance end time is the start of the occurance
     if test_occurance.end == occurance.start:
       return False
+    if test_occurance.end < occurance.start:
+      return False
     beginning_end_delta = test_occurance.end - occurance.end
     real_time = beginning_end_delta.total_seconds() / 60
 
-    print(f"end is {real_time}")
     return True
   return False
